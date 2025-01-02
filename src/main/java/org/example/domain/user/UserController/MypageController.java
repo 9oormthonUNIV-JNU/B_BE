@@ -1,12 +1,15 @@
 package org.example.domain.user.UserController;
 
 import lombok.RequiredArgsConstructor;
+import org.example.domain.user.UserDTO.MypageRequestDTO;
 import org.example.domain.user.UserDTO.MypageResponseDTO;
 import org.example.domain.user.UserService.MypageService;
 import org.example.global.response.ResponseEntityProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +27,13 @@ public class MypageController {
         MypageResponseDTO response = mypageService.getMypage(userId);
 
         return responseEntityProvider.successWithData("조회에 성공했습니다.", response);
+    }
+
+    // 마이페이지 세부사항 수정
+    @PatchMapping("/user/{user_id}")
+    public ResponseEntity<?> updateUserInfo(@PathVariable("user_id") Long userId, @RequestBody MypageRequestDTO requestDTO) {
+        mypageService.updateUserInfo(userId, requestDTO);
+
+        return responseEntityProvider.successWithoutData("수정 완료");
     }
 }

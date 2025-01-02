@@ -1,6 +1,9 @@
 package org.example.domain.user.UserService;
 
+import jakarta.transaction.Transactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.example.domain.user.UserDTO.MypageRequestDTO;
 import org.example.domain.user.UserDTO.MypageResponseDTO;
 import org.example.domain.user.UserEntity.User;
 import org.example.domain.user.UserRepository.UserRepository;
@@ -22,5 +25,18 @@ public class MypageService {
                 .build();
 
         return response;
+    }
+
+    // 마이페이지 세부사항 수정
+    @Transactional
+    public void updateUserInfo(Long userId, MypageRequestDTO requestDTO) {
+        User user = userRepository.findById(userId);
+
+        Optional.ofNullable(requestDTO.name()).ifPresent(user::setName);
+        Optional.ofNullable(requestDTO.email()).ifPresent(user::setEmail);
+        Optional.ofNullable(requestDTO.cardinal()).ifPresent(user::setCardinal);
+        Optional.ofNullable(requestDTO.part()).ifPresent(user::setPart);
+
+        userRepository.save(user);
     }
 }

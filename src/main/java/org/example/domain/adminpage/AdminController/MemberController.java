@@ -39,7 +39,5 @@ public class MemberController {
 
         return responseEntityProvider.successWithData("리스트를 성공적으로 불러왔습니다.",MemberResponseDTOList);
     }
-
-    
 }
 
