@@ -45,9 +45,11 @@ jobs:
 
     # 4. Docker 이미지 build
     - name: Build Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-app:latest .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-app:latest
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-app:latest .
+
+    # 5. Docker 이미지 
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-app:latest
 
   dependency-submission:
 
